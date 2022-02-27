@@ -4,5 +4,6 @@
     "module": "commonjs",
     "target": "ES2021",
     "esModuleInterop": true,
+    "noImplicitReturns": true
   },
 }
