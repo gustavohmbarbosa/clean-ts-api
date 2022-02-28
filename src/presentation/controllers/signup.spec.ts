@@ -88,6 +88,22 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
 
+  test('should return 400 if password and password confirmation are not equals', () => {
+    const { sut } = makeSut()
+    const HttpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password_diff'
+      }
+    }
+
+    const httpResponde = sut.handle(HttpRequest)
+    expect(httpResponde.statusCode).toBe(400)
+    expect(httpResponde.body).toEqual(new InvalidParamError('passwordConfirmation'))
+  })
+
   test('should return a bad request if an email invalid is provided', () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
